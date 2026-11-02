@@ -8,8 +8,16 @@ public class ObjectFactory {
         return new ProductService(new InMemoryProductRepository(),
                 new StandardPricingService());
     }
+
     public static ProductService createProductServiceObjectWithPromotionalPrice() {
         return new ProductService(new InMemoryProductRepository(),
                 new PromotionalPricingService(BigDecimal.valueOf(10)));
+    }
+
+    public static ShippingQuoteService createShippingQuoteService() {
+        return new ShippingQuoteService(
+                new ZoneShippingCalculator(),
+                new FreeShippingCalculator(),
+                new BigDecimal("5000.00"));
     }
 }
