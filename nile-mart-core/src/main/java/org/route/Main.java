@@ -36,7 +36,10 @@ public class Main {
                 .price(BigDecimal.valueOf(100))
                 .build();
 
-        System.out.println(productService.getPrice("PH-SAM-S25", 2));
+        System.out.println(productService.getPrice("PH-X5-128", 2));
+        productService.reduceStock("HOM-PAN-28", 2);
+        System.out.println(productService.findBySku("HOM-PAN-28").getStockQuantity());
+        productService.reduceStock("HOM-PAN-28", 4);
 
     }
 }
