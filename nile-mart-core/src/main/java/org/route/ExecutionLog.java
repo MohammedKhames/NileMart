@@ -11,19 +11,24 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class ExecutionLog {
 
-    @Around("execution(* org.route.ProductService.*(..)))")
+    @Around("execution(* org.route.*Service.*(..))")
     public Object executeLog(ProceedingJoinPoint jp) throws Throwable {
         String op = jp.getSignature().toShortString();
+        long start = System.nanoTime();
         System.out.println(op + " Started");
 
         try {
             Object result = jp.proceed();
-            System.out.println(op + " Success");
+            System.out.println(op + " Success (" + elapsedMs(start) + " ms)");
             return result;
         } catch (Throwable e) {
-            System.out.println(op + " Failed");
+            System.out.println(op + " Failed (" + elapsedMs(start) + " ms)");
             throw e;
         }
+    }
+
+    private long elapsedMs(long start) {
+        return (System.nanoTime() - start) / 1_000_000;
     }
 
 //    @Before("execution(* org.route.ProductService.*(..))")
